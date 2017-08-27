@@ -1,0 +1,15 @@
+pipeline:
+  build:
+    image: hashicorp/terraform:latest
+    environment:
+      - ENV=dev
+    secrets:
+      - ENV
+      - AWS_ACCESS_KEY
+      - AWS_SECRET_KEY
+      - BACKEND_CONFIG_BUCKET
+    commands:
+      - export
+      - terraform init -backend-config="bucket=$BACKEND_CONFIG_BUCKET"
+      - terraform plan
+      - terraform apply
